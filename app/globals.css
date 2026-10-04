@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #050508;
+    --foreground: #e8e4dc;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+  }
+}
+
+/* Custom cinematic glow & vignette styles */
+.cinematic-glow-gold {
+  box-shadow: 0 0 40px -10px rgba(230, 179, 102, 0.25);
+}
+
+.cinematic-glow-violet {
+  box-shadow: 0 0 50px -10px rgba(124, 92, 216, 0.2);
+}
+
+.cinematic-border-glow {
+  border: 1px solid rgba(230, 179, 102, 0.25);
+  background: linear-gradient(135deg, rgba(20, 15, 32, 0.55) 0%, rgba(8, 7, 16, 0.75) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.cinematic-border-glow:hover {
+  border-color: rgba(230, 179, 102, 0.5);
+  box-shadow: 0 0 30px -5px rgba(230, 179, 102, 0.2);
+}
+
+/* ─── Cinematic card readability treatment ────────────────────────────────── */
+/* Localized dark atmospheric haze behind text blocks — allows the cinematic   */
+/* background to remain visible while keeping text accessible.                  */
+.cinematic-text-haze {
+  position: relative;
+}
+.cinematic-text-haze::before {
+  content: "";
+  position: absolute;
+  inset: -24px -32px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(5, 5, 8, 0.55) 30%, transparent 100%);
+  border-radius: 2rem;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Improved cinematic glass card — more transparent, warmer border */
+.cinematic-card {
+  border: 1px solid rgba(230, 179, 102, 0.22);
+  background: linear-gradient(
+    135deg,
+    rgba(20, 15, 32, 0.42) 0%,
+    rgba(8, 7, 16, 0.60) 100%
+  );
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow:
+    0 0 0 1px rgba(230, 179, 102, 0.08) inset,
+    0 8px 40px -10px rgba(0, 0, 0, 0.5);
+}
+.cinematic-card:hover {
+  border-color: rgba(230, 179, 102, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(230, 179, 102, 0.14) inset,
+    0 12px 50px -8px rgba(0, 0, 0, 0.55),
+    0 0 30px -5px rgba(230, 179, 102, 0.15);
+}
+
+/* Section atmospheric background — replaces the opaque purple fallback */
+.section-atmosphere {
+  position: relative;
+}
+.section-atmosphere::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 50%,
+    rgba(15, 10, 28, 0.38) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Decoration animations ─────────────────────────────────────────────── */
+/* Very gentle physical sway for the wooden direction sign — like it is hanging
+   from a post in a light breeze. Tiny rotate only, no translate. */
+@keyframes signSway {
+  0%   { transform: rotate(-4deg); }
+  100% { transform: rotate(-1.5deg); }
+}
+
+/* Gentle sway for the enchanted flower — very subtle, no translate to avoid
+   layout jank on fixed-positioned elements */
+@keyframes flowerSway {
+  0%   { transform: rotate(-2deg) scale(1.00); }
+  100% { transform: rotate(2deg)  scale(1.02); }
+}
+
+/* Slow calm upward drift for paper lanterns.
+   Uses translateY in vh so it feels proportional across screen sizes.
+   Opacity fades at the very end so they don't abruptly vanish at top. */
+@keyframes lanternRise {
+  0%   { transform: translateY(0vh)   translateX(0px);   opacity: 1;   }
+  20%  { transform: translateY(-6vh)  translateX(4px);   opacity: 1;   }
+  50%  { transform: translateY(-18vh) translateX(-3px);  opacity: 0.9; }
+  80%  { transform: translateY(-34vh) translateX(5px);   opacity: 0.6; }
+  100% { transform: translateY(-50vh) translateX(0px);   opacity: 0;   }
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-border-glow:hover { transform: none; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* ─── Smooth custom scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050508;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a1b4e;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c9944d;
+}
